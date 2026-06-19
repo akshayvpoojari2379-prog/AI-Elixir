@@ -15,29 +15,60 @@ Enterprise AI Service Desk Assistant integrated with Elixir Portal and Freshserv
 - **Database**: PostgreSQL with `pgvector`
 - **AI Stack**: LangChain, LangGraph, Model (Gemini-3.5-flash)
 
+## Prerequisites
+- **Python**: v3.10+
+- **Node.js**: v18+
+- **Docker & Docker Compose** (not require in dev mode, but use for running PostgreSQL and Redis)
+- **Ollama** (optional, if running models locally)
+
 ## Setup
 
-1. Copy `.env.example` to `.env` and fill in the values.
+1. **Configure Environment Variables**:
+   Copy `.env.example` to `.env` in both the project root and `backend` directories, then populate them with your credentials (such as database credentials, Gemini API keys, and Freshservice credentials):
    ```bash
    cp .env.example .env
    ```
 
-2. Start the services using Docker Compose:
+2. **Start Infrastructure Services**:
+   Spin up PostgreSQL (with `pgvector` extension) and Redis using Docker Compose:
    ```bash
    docker-compose up -d
    ```
 
-3. Initialize the database:
+3. **Initialize the Database Schema**:
+   Run Alembic migrations to set up the SQL table schemas:
    ```bash
    cd backend
    alembic upgrade head
    ```
+
+4. **Seed Knowledge Base & Seeding Data**:
+   Populate the Postgres tables with standard categories and compile the vector database (FAISS indices) by running the enterprise seeding script:
+   ```bash
+   python ingestion/seed_enterprise_data.py
+   ```
+   *Note: This creates the local text manual guidelines, builds the FAISS indexes inside the `/db/faiss/` folder, and sets up ITSM categories.*
+
+---
 
 ## Development
 
 Run backend locally:
 ```bash
 cd backend
+# Create a virtual environment (optional but recommended)
+python -m venv venv
+
+# Activate the virtual environment
+# On Windows:
+.\venv\Scripts\activate
+# On Linux/macOS:
+source venv/bin/activate
+
+# Install the dependencies
+pip install -r requirements.txt
+
+# Run the server
 uvicorn main:app --reload
 ```
 
@@ -47,6 +78,7 @@ cd frontend
 npm install
 npm run dev
 ```
+
 
 
 
