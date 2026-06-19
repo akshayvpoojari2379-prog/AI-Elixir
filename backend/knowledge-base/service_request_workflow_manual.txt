@@ -1,0 +1,12 @@
+ITSM SOP: Service Request Catalog Onboarding Manual
+        
+        Section 1: Asset Request and Laptop Allocation Procedures
+        Employees requesting a new laptop, upgrade, or software access must submit a Service Request.
+        Parameters needed for laptop requests: employee_email, laptop_model, price.
+        
+        Section 2: Budget Thresholds and Pending Approvals
+        - If the laptop price is greater than $1000, the system must trigger Director Approval.
+        - High priority catalog items require department head authorization.
+        
+        Capabilities: laptop request, asset requests, catalog navigation, asset allocation.
+        Target Domain: service_request_management

@@ -1,0 +1,11 @@
+ITSM SOP: Asset-Related Incident Management Manual
+        
+        Section 1: Hardware & System Incident Procedures
+        Employees experiencing device issues (Laptop, Desktop, or Screen/Monitor) like system crashes, hangs, boot failures, or display flickering should log a Hardware Incident.
+        Required diagnostic details: device_type, system_symptom, serial_number.
+        Target Domain: incident_management
+        
+        Section 2: Printer & Scanner Incident Procedures
+        Employees encountering printing failures, scanning issues, configuration needs, or paper jams should report a Printer/Scanner Incident.
+        Required diagnostic details: issue_detail, printer_location, error_code.
+        Target Domain: incident_management

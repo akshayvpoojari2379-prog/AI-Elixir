@@ -1,0 +1,125 @@
+{
+  "sr_workflow": {
+    "displayName": "SR Workflows Agent",
+    "description": "Orchestrates Service Request (SR) lifecycles: software access, account creation, and hardware provisioning.",
+    "issues": {
+      "hardware_provisioning": {
+        "displayName": "Hardware Device Provisioning",
+        "ticket_type": "service_request",
+        "clarification_questions": [
+          "What device category do you require (Laptop, Monitor, Mobile)?",
+          "Is this request for a new joiner or a device upgrade?",
+          "What is the delivery address or office location?"
+        ],
+        "resolution_steps": [
+          "Check stock availability in the hardware inventory database.",
+          "Initiate purchase approval workflow if stock is below threshold.",
+          "Configure standard corporate security image and MDM profile on the device.",
+          "Schedule courier dispatch and share tracking ID with the employee."
+        ]
+      },
+      "asset_allocation_surrender": {
+        "displayName": "Asset allocation / surrender Service Request",
+        "ticket_type": "service_request",
+        "clarification_questions": [
+          "What is the SR Name (e.g. Laptop Request for New Joinee, Surrender of Laptop)?"
+        ],
+        "resolution_steps": [
+          "Validate required fields based on the selected SR Name.",
+          "Request missing details from the user conversationally.",
+          "Place the service request inside Freshservice using the API.",
+          "Present the created ticket card."
+        ]
+      },
+      "mdg_service_request": {
+        "displayName": "MDG Service Request",
+        "ticket_type": "service_request",
+        "clarification_questions": [
+          "What is the SR Name (e.g. Bulk customer block/unblock for IBU, New user provisioning in MDG, Master Update – Non-Bulk)?"
+        ],
+        "resolution_steps": [
+          "Validate required fields based on the selected SR Name.",
+          "Request missing details from the user conversationally.",
+          "Place the service request inside Freshservice using the API.",
+          "Present the created ticket card."
+        ]
+      },
+      "account_unlock_service_request": {
+        "displayName": "Account Unlock Service Request",
+        "ticket_type": "service_request",
+        "clarification_questions": [
+          "Which system do you need to unlock? (SAP MDG, SAP EWM, SAP PRD)",
+          "For whom to unlock? (Self, Common ID)"
+        ],
+        "resolution_steps": [
+          "Validate required fields based on the selected SR Name.",
+          "Request missing details from the user conversationally.",
+          "Place the service request inside Freshservice using the API.",
+          "Present the created ticket card."
+        ]
+      },
+      "password_reset_service_request": {
+        "displayName": "Password Reset Service Request",
+        "ticket_type": "service_request",
+        "clarification_questions": [
+          "What is the SR Name (e.g. Password reset for SAP MDG (Self), Password reset for SAP EWM (Common ID))?"
+        ],
+        "resolution_steps": [
+          "Validate required fields based on the selected SR Name.",
+          "Request missing details from the user conversationally.",
+          "Place the service request inside Freshservice using the API.",
+          "Present the created ticket card."
+        ]
+      }
+    }
+  },
+  "incident_workflow": {
+    "displayName": "Incident Workflows Agent",
+    "description": "Orchestrates Incident lifecycles: hardware failures, system crashes, and printer/scanner issues.",
+    "issues": {
+      "hardware_issues": {
+        "displayName": "Hardware / System Incident",
+        "ticket_type": "incident",
+        "clarification_questions": [
+          "What device is having the issue (Laptop, Desktop, or Screen/Monitor)?",
+          "Could you please describe the specific symptom (e.g., system crash, hang, not booting, display flickering)?",
+          "What is the asset tag or serial number of the device, if available?"
+        ],
+        "resolution_steps": [
+          "Verify if the device is powering on or responsive.",
+          "Diagnose whether it is a software fault or a hardware breakdown.",
+          "Open an incident ticket in Freshservice under Category 'Hardware Issues' to dispatch IT Support."
+        ]
+      },
+      "printer_scanner_issues": {
+        "displayName": "Printer / Scanner Incident",
+        "ticket_type": "incident",
+        "clarification_questions": [
+          "Is it a printer issue, scanner issue, or a configuration/paper jam problem?",
+          "What is the printer or scanner model/location?",
+          "What is the error code or message displayed on the device, if any?"
+        ],
+        "resolution_steps": [
+          "Check physical connectivity and print queue status.",
+          "Verify if a paper jam or hardware maintenance is required.",
+          "Open an incident ticket in Freshservice under Category 'Printer/Scanner' to dispatch local support."
+        ]
+      },
+      "sap_mdg_issues": {
+        "displayName": "SAP MDG Incident",
+        "ticket_type": "incident",
+        "clarification_questions": [
+          "Which master data area is this related to (Common to all masters, Customer, Employee, Material, System Issues, Vendor)?",
+          "What is the specific code (Customer Code, Material Code, Vendor Code, or Employee Code) you are working with? (If not applicable, say NA)",
+          "Could you please describe the specific error or issue you are experiencing (e.g. data not reflecting in PRD, workflow error, block/unblock issue)?",
+          "What is the MDG Change Request (CR) ID, if available? (If not, say NA)"
+        ],
+        "resolution_steps": [
+          "Identify the master data category, subcategory and specific item error.",
+          "Check SAP MDG Change Request status from the backend if a CR ID is provided.",
+          "Route to the Master Data Governance support team under Category 'SAP MDG'."
+        ]
+      }
+    }
+  }
+}
