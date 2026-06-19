@@ -1,9 +1,9 @@
-# AI Service Desk Assistant
+# Elixir AI Assistant
 
-Enterprise AI Service Desk Assistant integrated with Elixir Portal and Freshservice.
+Enterprise Elixir AI Assistant integrated with Elixir Portal and Freshservice.
 
 ## Features
-- Conversational AI support (Powered by local Gemma 2B via Ollama)
+- Conversational AI support (Powered by Gemini)
 - Semantic Search over KB Articles & FAQs (pgvector + BAAI/bge-small-en-v1.5)
 - Automated Freshservice Ticket Creation
 - Conversation Memory
