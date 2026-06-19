@@ -317,3 +317,41 @@ def _build_graph(self) -> StateGraph:
     
     return workflow.compile()
 ```
+
+
+## Image OCR & RAG Pipeline Walkthrough (Location Data Extension Example)
+This section explains how the system processes screenshots to resolve enterprise IT issues, using the **Location Data Extension** sync error as an example:
+```mermaid
+sequenceDiagram
+    autonumber
+    actor User as User
+    participant UI as Next.js Frontend
+    participant API as FastAPI Backend (EasyOCR)
+    participant RAG as RAG Search (FAISS)
+    participant LLM as Gemini LLM
+    User->>UI: Uploads screenshot of "Location Data Extension" sync error
+    UI->>API: POST /api/v1/chat (Base64 file data)
+    API->>API: Decodes image & runs EasyOCR
+    note over API: Extracted: "Location data extension workflow initiated, not extended in PRD"
+    API->>RAG: Searches FAISS Vector Index (kb_index.faiss)
+    RAG-->>API: Retrieves matching "Location Data Extension SOP" context (Score >= 0.40)
+    API->>LLM: Requests synthesis of solution using SOP context
+    LLM-->>API: Returns clean, step-by-step resolution steps
+    API-->>UI: Sends response JSON with citations
+    UI->>User: Displays step-by-step guidelines & ticket request card
+```
+### Detailed Execution Steps:
+#### 1. Image OCR Parsing
+When a user uploads a screenshot showing a synchronisation failure message like:
+> *"Location data extension workflow initiated in portal, but not extended in PRD."*
+*   The frontend converts the file to base64 format and sends it to the `/chat` route.
+*   The backend's global `easyocr` reader parses the text layers of the image.
+*   The extracted text matches the phrase: `Location data extension workflow initiated in portal, but not extended in PRD` and is appended to the message context.
+#### 2. Vector Search (FAISS & Postgres)
+*   The RAG Pipeline runs the query through the `SentenceTransformer` embedding model (`BAAI/bge-small-en-v1.5`).
+*   It performs a cosine similarity lookup against `db/faiss/kb_index.faiss` (which contains chunked documentation, such as the `Location Data Extension` process manuals and `seed_enterprise_data.py` rules).
+*   It retrieves the exact operational checklist section explaining how to verify plant codes, execute rollbacks, or check if the record is locked in a change request.
+#### 3. LLM Synthesis
+*   The system feeds the manual context and the user query to the Gemini API (`gemini-2.5-flash`).
+*   The LLM compiles a friendly response telling the user exactly how to troubleshoot the issue (e.g. validating the change request inside SAP MDG).
+*   If the search similarity score is low (borderline), the system flags the message with `needs_ticket: true` so the user can easily escalate to a Freshservice support group with one click.
